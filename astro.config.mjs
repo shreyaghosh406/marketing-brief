@@ -11,8 +11,12 @@ export default defineConfig({
       title: 'Marketing Foundations',
       description:
         'A one-week, self-paced course for people who are new to marketing.',
-      // Hide the social/edit links by default; this is a self-contained course.
-      customCss: ['./src/styles/theme.css'],
+      // Self-hosted fonts first, then our theme so it can use them.
+      customCss: [
+        '@fontsource-variable/inter',
+        '@fontsource-variable/space-grotesk',
+        './src/styles/theme.css',
+      ],
       // Course order: Welcome → Module 1 → 2 → 3 → 4 → 5 → 6 → Capstone.
       sidebar: [
         { label: 'Welcome', link: '/' },

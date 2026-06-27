@@ -1,144 +1,467 @@
 /*
-  Marketing Foundations — visual theme.
-  ------------------------------------------------------------------
-  A calm, dark, long-form reading experience with a burnt-coral accent.
+  Marketing Foundations — visual theme
+  ====================================================================
+  A calm, dark, long-form reading experience with a burnt-coral accent
+  and a bold grotesque display face.
 
-  Want a different look? You can safely tweak the colors below.
-  - To change the accent color, edit every value of --mf-coral.
-  - To switch to a light theme instead, the simplest route is to remove
-    this file from `customCss` in astro.config.mjs (Starlight ships a clean
-    light/dark theme by default).
+  Want a different look? The colors are all defined once, right below.
+  - Change the accent: edit the --mf-coral* values.
+  - Switch to a light theme: remove './src/styles/theme.css' from the
+    customCss list in astro.config.mjs (Starlight ships a clean default).
 */
 
+/* ------------------------------------------------------------------ */
+/*  1. Color + design tokens                                           */
+/* ------------------------------------------------------------------ */
+
 :root {
-  /* Burnt coral accent, plus a couple of tints/shades of it. */
+  /* Burnt-coral accent family. */
   --mf-coral: #e55934;
-  --mf-coral-bright: #f06d4a;
+  --mf-coral-bright: #ff7a52;
   --mf-coral-dim: #c2401f;
+  --mf-coral-glow: rgba(229, 89, 52, 0.22);
 
-  /* Map the accent onto Starlight's accent scale (used for links,
-     active sidebar item, buttons, focus rings, etc.). */
-  --sl-color-accent-low: #3a160d;
+  /* Surfaces (near-black, with subtly elevated panels). */
+  --mf-bg: #0a0a0a;
+  --mf-bg-soft: #0f0e0d;
+  --mf-surface: #15130f;
+  --mf-surface-2: #1b1814;
+  --mf-border: #2a2622;
+  --mf-border-soft: #211d19;
+
+  /* Reading measure (~65–75 characters). */
+  --sl-content-width: 47rem;
+
+  /* Map the accent onto Starlight's scale. */
+  --sl-color-accent-low: #2e120a;
   --sl-color-accent: var(--mf-coral);
-  --sl-color-accent-high: #f7b6a3;
+  --sl-color-accent-high: #ffb59f;
 
-  /* Comfortable reading measure (~65–75 characters). */
-  --sl-content-width: 50rem;
+  /* Fonts. */
+  --sl-font: 'Inter Variable', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --mf-display: 'Space Grotesk Variable', var(--sl-font);
 }
 
 /* Dark theme (the default for this site). */
 :root,
 :root[data-theme='dark'] {
-  --sl-color-accent-low: #3a160d;
+  --sl-color-accent-low: #2e120a;
   --sl-color-accent: var(--mf-coral);
-  --sl-color-accent-high: #f7b6a3;
+  --sl-color-accent-high: #ffb59f;
 
-  /* Near-black background, around #0A0A0A. */
-  --sl-color-bg: #0a0a0a;
-  --sl-color-bg-nav: #0a0a0a;
-  --sl-color-bg-sidebar: #0d0d0d;
-  --sl-color-bg-inline-code: #1a1a1a;
-  --sl-color-hairline-shade: #1e1e1e;
+  --sl-color-bg: var(--mf-bg);
+  --sl-color-bg-nav: rgba(10, 10, 10, 0.7);
+  --sl-color-bg-sidebar: var(--mf-bg);
+  --sl-color-bg-inline-code: #1d1a16;
+  --sl-color-hairline: var(--mf-border-soft);
+  --sl-color-hairline-shade: var(--mf-border-soft);
+  --sl-color-hairline-light: var(--mf-border);
 
-  /* Readable, warm-neutral text on near-black. */
-  --sl-color-white: #f5f3f1;
-  --sl-color-gray-1: #e7e3df;
-  --sl-color-gray-2: #c4bfba;
-  --sl-color-gray-3: #9a948e;
-  --sl-color-gray-4: #6f6a64;
-  --sl-color-gray-5: #2a2825;
-  --sl-color-gray-6: #1a1917;
-  --sl-color-gray-7: #141312;
+  --sl-color-white: #f6f3f0;
+  --sl-color-gray-1: #ece8e3;
+  --sl-color-gray-2: #c9c3bc;
+  --sl-color-gray-3: #9a948c;
+  --sl-color-gray-4: #6d675f;
+  --sl-color-gray-5: #2c2823;
+  --sl-color-gray-6: #1a1714;
+  --sl-color-gray-7: #131110;
+  --sl-color-text-accent: var(--mf-coral-bright);
 }
 
-/* Light theme fallback (used if a visitor flips the theme toggle). */
+/* Light theme fallback (if a visitor flips the toggle). */
 :root[data-theme='light'] {
-  --sl-color-accent-low: #ffe3d8;
+  --sl-color-accent-low: #ffe1d6;
   --sl-color-accent: var(--mf-coral-dim);
   --sl-color-accent-high: #5c1d0c;
+  --sl-color-text-accent: var(--mf-coral-dim);
 }
 
-/* ---------- Typography ---------- */
+/* ------------------------------------------------------------------ */
+/*  2. Global base                                                     */
+/* ------------------------------------------------------------------ */
 
-:root {
-  /* Highly readable system sans for body; a bold grotesque feel for headings. */
-  --sl-font:
-    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
-    Helvetica, Arial, sans-serif;
-  --sl-font-system:
-    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+html {
+  scroll-behavior: smooth;
 }
 
-/* Generous spacing and an oversized, bold display feel for headings. */
+body {
+  background:
+    radial-gradient(
+      60rem 40rem at 75% -10%,
+      var(--mf-coral-glow),
+      transparent 60%
+    ),
+    var(--mf-bg);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: var(--mf-coral);
+  color: #0a0a0a;
+}
+
+/* Slimmer, on-brand scrollbar. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--mf-border) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--mf-border);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--mf-coral-dim);
+}
+
+/* Frosted, subtle top bar. */
+.header {
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--mf-border-soft);
+}
+
+/* The site title in the header gets the display face. */
+.site-title {
+  font-family: var(--mf-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ------------------------------------------------------------------ */
+/*  3. Typography                                                      */
+/* ------------------------------------------------------------------ */
+
+.sl-markdown-content {
+  font-size: 1.0625rem;
+  line-height: 1.78;
+  color: var(--sl-color-gray-1);
+}
+
 .sl-markdown-content h1,
 .sl-markdown-content h2,
-.sl-markdown-content h3 {
-  letter-spacing: -0.02em;
-  font-weight: 800;
+.sl-markdown-content h3,
+.sl-markdown-content h4 {
+  font-family: var(--mf-display);
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  color: var(--sl-color-white);
   line-height: 1.15;
 }
 
+/* Page title. */
+.content-panel h1#_top,
 .sl-markdown-content h1 {
-  font-size: clamp(2.1rem, 1.5rem + 3vw, 3.1rem);
+  font-size: clamp(2.2rem, 1.6rem + 3vw, 3.2rem);
+  font-weight: 700;
 }
 
-.sl-markdown-content {
-  line-height: 1.75;
-  font-size: 1.0625rem;
+.sl-markdown-content h2 {
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+  margin-top: 2.4em;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--mf-border-soft);
 }
 
-/* A touch more breathing room between blocks for long reading sessions. */
+.sl-markdown-content h3 {
+  font-size: 1.3rem;
+  margin-top: 2em;
+  color: var(--sl-color-white);
+}
+
+/* The lesson sub-sections (### Why this matters etc.) get a coral tick. */
+.sl-markdown-content h3::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.6rem;
+  border-radius: 2px;
+  background: var(--mf-coral);
+  vertical-align: middle;
+  transform: translateY(-0.12em);
+}
+
 .sl-markdown-content p,
 .sl-markdown-content ul,
-.sl-markdown-content ol,
-.sl-markdown-content blockquote {
-  margin-top: 1.1em;
+.sl-markdown-content ol {
+  margin-top: 1.15em;
 }
 
-/* ---------- Tables (the Brightly dataset + rubrics) ---------- */
+.sl-markdown-content strong {
+  color: var(--sl-color-white);
+  font-weight: 650;
+}
+
+/* Links: coral, animated underline. */
+.sl-markdown-content a {
+  color: var(--mf-coral-bright);
+  text-decoration: none;
+  background-image: linear-gradient(var(--mf-coral), var(--mf-coral));
+  background-size: 0% 1.5px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.25s ease;
+  padding-bottom: 1px;
+}
+.sl-markdown-content a:hover {
+  background-size: 100% 1.5px;
+}
+
+/* Inline code. */
+.sl-markdown-content :not(pre) > code {
+  background: var(--sl-color-bg-inline-code);
+  border: 1px solid var(--mf-border-soft);
+  border-radius: 6px;
+  padding: 0.12em 0.4em;
+  font-size: 0.9em;
+  color: #f0cbbd;
+}
+
+/* ------------------------------------------------------------------ */
+/*  4. Blockquotes (used for the worked examples)                      */
+/* ------------------------------------------------------------------ */
+
+.sl-markdown-content blockquote {
+  border: 1px solid var(--mf-border);
+  border-left: 3px solid var(--mf-coral);
+  background: var(--mf-surface);
+  border-radius: 0 12px 12px 0;
+  padding: 0.4rem 1.3rem;
+  margin-top: 1.3em;
+  color: var(--sl-color-gray-1);
+  font-style: normal;
+}
+
+/* ------------------------------------------------------------------ */
+/*  5. Tables (Brightly dataset + every rubric)                        */
+/* ------------------------------------------------------------------ */
 
 .sl-markdown-content table {
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   width: 100%;
+  margin-top: 1.6em;
+  border: 1px solid var(--mf-border);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 0.97rem;
 }
 
-.sl-markdown-content th {
-  background: var(--sl-color-accent-low);
+.sl-markdown-content thead th {
+  background: linear-gradient(var(--sl-color-accent-low), #1a0e08);
   color: var(--sl-color-white);
-  border-bottom: 2px solid var(--mf-coral);
+  font-family: var(--mf-display);
+  font-weight: 600;
   text-align: left;
+  border-bottom: 2px solid var(--mf-coral);
+  white-space: nowrap;
 }
 
 .sl-markdown-content th,
 .sl-markdown-content td {
-  padding: 0.55rem 0.8rem;
+  padding: 0.65rem 0.95rem;
+  border-bottom: 1px solid var(--mf-border-soft);
 }
 
+.sl-markdown-content tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.sl-markdown-content tbody tr {
+  transition: background 0.15s ease;
+}
 .sl-markdown-content tbody tr:nth-child(even) {
-  background: var(--sl-color-gray-7);
+  background: var(--mf-bg-soft);
+}
+.sl-markdown-content tbody tr:hover {
+  background: rgba(229, 89, 52, 0.08);
 }
 
-/* ---------- Pill-style links & buttons ---------- */
-
-/* Starlight's <LinkButton> / call-to-action gets a rounded, coral pill. */
-.sl-link-button.primary {
-  background: var(--mf-coral);
-  border-radius: 999px;
-  border: none;
-  color: #0a0a0a !important;
-  font-weight: 700;
-  padding-inline: 1.4rem;
+/* First column of a table reads as a row label. */
+.sl-markdown-content tbody td:first-child {
+  color: var(--sl-color-white);
+  font-weight: 600;
 }
 
-.sl-link-button.primary:hover {
-  background: var(--mf-coral-bright);
-}
+/* ------------------------------------------------------------------ */
+/*  6. Callouts / asides (the TODO placeholders in Module 1)           */
+/* ------------------------------------------------------------------ */
 
-/* Rounded corners on flat color planes (cards, asides). */
 .sl-markdown-content .starlight-aside {
   border-radius: 12px;
+  border-width: 1px;
+  border-left-width: 4px;
+  padding: 1rem 1.25rem;
+}
+.sl-markdown-content .starlight-aside--caution {
+  background: rgba(229, 89, 52, 0.08);
+  border-color: var(--mf-coral-dim);
+}
+.starlight-aside__title {
+  font-family: var(--mf-display);
 }
 
-.card {
-  border-radius: 14px;
+/* ------------------------------------------------------------------ */
+/*  7. Sidebar navigation                                              */
+/* ------------------------------------------------------------------ */
+
+.sidebar-content a {
+  border-radius: 8px;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+  font-weight: 500;
+}
+.sidebar-content a:hover {
+  background: var(--mf-surface);
+  color: var(--sl-color-white);
+}
+/* Active page: coral pill. */
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover {
+  background: var(--mf-coral);
+  color: #0a0a0a;
+  font-weight: 650;
+}
+
+/* ------------------------------------------------------------------ */
+/*  8. Buttons / call-to-action pills                                  */
+/* ------------------------------------------------------------------ */
+
+.sl-link-button.primary {
+  background: var(--mf-coral);
+  border: none;
+  border-radius: 999px;
+  color: #0a0a0a !important;
+  font-family: var(--mf-display);
+  font-weight: 600;
+  padding: 0.85rem 1.6rem;
+  box-shadow: 0 6px 24px -8px var(--mf-coral);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+.sl-link-button.primary:hover {
+  background: var(--mf-coral-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -8px var(--mf-coral);
+}
+
+.sl-link-button.secondary {
+  border-radius: 999px;
+  border: 1px solid var(--mf-border);
+}
+
+/* Prev / next pager cards. */
+.pagination-links a {
+  border: 1px solid var(--mf-border);
+  border-radius: 12px;
+  background: var(--mf-surface);
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+.pagination-links a:hover {
+  border-color: var(--mf-coral);
+  transform: translateY(-2px);
+}
+.pagination-links a span {
+  color: var(--sl-color-white);
+}
+
+/* ------------------------------------------------------------------ */
+/*  9. Splash / landing hero                                          */
+/* ------------------------------------------------------------------ */
+
+.hero {
+  padding-block: 1rem;
+}
+.hero h1 {
+  font-family: var(--mf-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-size: clamp(3rem, 2rem + 6vw, 5.5rem);
+  line-height: 0.98;
+  background: linear-gradient(180deg, #ffffff 30%, #d8a89a 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero .tagline {
+  font-size: clamp(1.1rem, 1rem + 0.6vw, 1.4rem);
+  color: var(--sl-color-gray-2);
+  max-width: 38ch;
+}
+
+/* Keep the landing-page body text at a comfortable reading measure
+   (the hero itself stays full-width). Splash-only: scoped to the
+   markdown block that follows the hero. */
+.hero ~ .sl-markdown-content {
+  max-width: 46rem;
+}
+
+/* ------------------------------------------------------------------ */
+/*  10. Landing-page helper components (used in index.mdx)             */
+/* ------------------------------------------------------------------ */
+
+/* Small uppercase eyebrow label. */
+.mf-eyebrow {
+  font-family: var(--mf-display);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--mf-coral-bright);
+}
+
+/* Card grid + cards on the landing page. */
+.card-grid {
+  gap: 1rem !important;
+}
+.sl-markdown-content .card {
+  background: var(--mf-surface);
+  border: 1px solid var(--mf-border);
+  border-radius: 16px;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease;
+}
+.sl-markdown-content .card:hover {
+  transform: translateY(-3px);
+  border-color: var(--mf-coral);
+}
+.sl-markdown-content .card .icon {
+  color: var(--mf-coral-bright);
+  background: rgba(229, 89, 52, 0.1);
+  border-radius: 10px;
+}
+.sl-markdown-content .card .title {
+  font-family: var(--mf-display);
+  color: var(--sl-color-white);
+}
+
+/* A bordered “what you'll build” style stat row, optional. */
+.mf-lead {
+  font-size: 1.2rem !important;
+  line-height: 1.6;
+  color: var(--sl-color-gray-1);
+}
+
+/* ------------------------------------------------------------------ */
+/*  11. Responsive niceties                                           */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 50rem) {
+  .sl-markdown-content table {
+    font-size: 0.88rem;
+  }
+  .sl-markdown-content th,
+  .sl-markdown-content td {
+    padding: 0.5rem 0.6rem;
+  }
 }
