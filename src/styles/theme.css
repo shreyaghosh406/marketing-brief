@@ -1,0 +1,144 @@
+/*
+  Marketing Foundations — visual theme.
+  ------------------------------------------------------------------
+  A calm, dark, long-form reading experience with a burnt-coral accent.
+
+  Want a different look? You can safely tweak the colors below.
+  - To change the accent color, edit every value of --mf-coral.
+  - To switch to a light theme instead, the simplest route is to remove
+    this file from `customCss` in astro.config.mjs (Starlight ships a clean
+    light/dark theme by default).
+*/
+
+:root {
+  /* Burnt coral accent, plus a couple of tints/shades of it. */
+  --mf-coral: #e55934;
+  --mf-coral-bright: #f06d4a;
+  --mf-coral-dim: #c2401f;
+
+  /* Map the accent onto Starlight's accent scale (used for links,
+     active sidebar item, buttons, focus rings, etc.). */
+  --sl-color-accent-low: #3a160d;
+  --sl-color-accent: var(--mf-coral);
+  --sl-color-accent-high: #f7b6a3;
+
+  /* Comfortable reading measure (~65–75 characters). */
+  --sl-content-width: 50rem;
+}
+
+/* Dark theme (the default for this site). */
+:root,
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #3a160d;
+  --sl-color-accent: var(--mf-coral);
+  --sl-color-accent-high: #f7b6a3;
+
+  /* Near-black background, around #0A0A0A. */
+  --sl-color-bg: #0a0a0a;
+  --sl-color-bg-nav: #0a0a0a;
+  --sl-color-bg-sidebar: #0d0d0d;
+  --sl-color-bg-inline-code: #1a1a1a;
+  --sl-color-hairline-shade: #1e1e1e;
+
+  /* Readable, warm-neutral text on near-black. */
+  --sl-color-white: #f5f3f1;
+  --sl-color-gray-1: #e7e3df;
+  --sl-color-gray-2: #c4bfba;
+  --sl-color-gray-3: #9a948e;
+  --sl-color-gray-4: #6f6a64;
+  --sl-color-gray-5: #2a2825;
+  --sl-color-gray-6: #1a1917;
+  --sl-color-gray-7: #141312;
+}
+
+/* Light theme fallback (used if a visitor flips the theme toggle). */
+:root[data-theme='light'] {
+  --sl-color-accent-low: #ffe3d8;
+  --sl-color-accent: var(--mf-coral-dim);
+  --sl-color-accent-high: #5c1d0c;
+}
+
+/* ---------- Typography ---------- */
+
+:root {
+  /* Highly readable system sans for body; a bold grotesque feel for headings. */
+  --sl-font:
+    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+  --sl-font-system:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Generous spacing and an oversized, bold display feel for headings. */
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3 {
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.sl-markdown-content h1 {
+  font-size: clamp(2.1rem, 1.5rem + 3vw, 3.1rem);
+}
+
+.sl-markdown-content {
+  line-height: 1.75;
+  font-size: 1.0625rem;
+}
+
+/* A touch more breathing room between blocks for long reading sessions. */
+.sl-markdown-content p,
+.sl-markdown-content ul,
+.sl-markdown-content ol,
+.sl-markdown-content blockquote {
+  margin-top: 1.1em;
+}
+
+/* ---------- Tables (the Brightly dataset + rubrics) ---------- */
+
+.sl-markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.sl-markdown-content th {
+  background: var(--sl-color-accent-low);
+  color: var(--sl-color-white);
+  border-bottom: 2px solid var(--mf-coral);
+  text-align: left;
+}
+
+.sl-markdown-content th,
+.sl-markdown-content td {
+  padding: 0.55rem 0.8rem;
+}
+
+.sl-markdown-content tbody tr:nth-child(even) {
+  background: var(--sl-color-gray-7);
+}
+
+/* ---------- Pill-style links & buttons ---------- */
+
+/* Starlight's <LinkButton> / call-to-action gets a rounded, coral pill. */
+.sl-link-button.primary {
+  background: var(--mf-coral);
+  border-radius: 999px;
+  border: none;
+  color: #0a0a0a !important;
+  font-weight: 700;
+  padding-inline: 1.4rem;
+}
+
+.sl-link-button.primary:hover {
+  background: var(--mf-coral-bright);
+}
+
+/* Rounded corners on flat color planes (cards, asides). */
+.sl-markdown-content .starlight-aside {
+  border-radius: 12px;
+}
+
+.card {
+  border-radius: 14px;
+}

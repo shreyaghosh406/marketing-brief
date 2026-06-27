@@ -1,0 +1,18 @@
+{
+  "name": "marketing-foundations",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Marketing Foundations — a one-week, self-paced marketing course site.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.36.0",
+    "astro": "^5.14.0",
+    "sharp": "^0.34.0"
+  }
+}
