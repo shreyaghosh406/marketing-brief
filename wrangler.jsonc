@@ -1,0 +1,10 @@
+{
+  // Tells Cloudflare how to deploy this site.
+  // It's a static site (just HTML/CSS files), so we point Cloudflare at the
+  // "dist" folder that `npm run build` produces and let it serve those files.
+  "name": "marketing-brief",
+  "compatibility_date": "2025-01-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}
